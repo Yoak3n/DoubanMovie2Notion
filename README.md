@@ -1,2 +1,2 @@
 # DoubanMovie2Notion
-Craw movie infomation from douban to notion
+Crawl movie infomation from douban to notion
