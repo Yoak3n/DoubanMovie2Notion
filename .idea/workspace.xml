@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c1ca8c74-e75b-416e-bb12-a3f61fbb809d" name="Changes" comment="'将初始代码中的敏感信息删除'" />
+    <list default="true" id="c1ca8c74-e75b-416e-bb12-a3f61fbb809d" name="Changes" comment="'将初始代码中的敏感信息删除'">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
