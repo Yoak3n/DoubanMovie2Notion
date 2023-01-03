@@ -253,13 +253,14 @@ class DoubanMovieRobot():
                 self.read_post(page_id,p,headers,movie)
 
         else:
+
+            page_id, token = self.get_config()[:2]
+            cookie = ''
             movie_id = input('请输入电影ID：')
             if movie_id == '':
                 print('请输入正确的电影ID')
             else:
                 movie_id = movie_id
-            page_id, token = self.get_config()[:2]
-            cookie = ''
             movie = self.crawl_movie_info(movie_id,cookie)
             p = {
                 "properties": {
