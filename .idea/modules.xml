@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://F:/Desktop/pythonProject/DBM2Notion/.idea/DBM2Notion.iml" filepath="F:/Desktop/pythonProject/DBM2Notion/.idea/DBM2Notion.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/DoubanMovie2Notion.iml" filepath="$PROJECT_DIR$/.idea/DoubanMovie2Notion.iml" />
     </modules>
   </component>
