@@ -31,40 +31,43 @@ class DoubanMovie:
         self.src = src
 
 
+def get_config(isbulk=None):
+
+    if not os.path.exists('./clc'):
+        os.mkdir('./clc')
+        os.mkdir('./clc/keys')
+    else:
+        if not os.path.exists('./clc/keys'):
+            os.mkdir('./clc/keys')
+
+    if os.path.exists('./clc/keys/use_key.json'):
+        with open('./clc/keys/use_key.json', 'r', encoding='utf-8') as fp:
+            config_data = json.load(fp)
+            page_id = config_data["pageid"]
+            token = config_data["token"]
+            cookie = config_data["cookie"]
+        print('已读取到本地配置文件')
+    else:
+        print('未找到配置文件，请先进行配置')
+        page_id = input('请输入notion页面id：')
+        token = input('请输入操作该页面的机器人token：')
+        if isbulk:
+            cookie = input("请输入登录豆瓣后的cookie:")
+        else:
+            cookie = ''
+        print("初始化配置成功")
+        config_data = {"pageid": page_id, "token": token, "cookie": cookie}
+        with open('./clc/keys/use_key.json', 'w', encoding='utf-8') as fp:
+            config_data = json.dumps(config_data)
+            fp.write(config_data)
+
+    return page_id, token, cookie
+
+
 class DoubanMovieRobot():
 
-
-
-    def get_config(self,isbulk=None):
-        if not os.path.exists('./clc'):
-            os.mkdir('./clc')
-            os.mkdir('./clc/keys')
-        else:
-            if not os.path.exists('./clc/keys'):
-                os.mkdir('./clc/keys')
-
-        if os.path.exists('./clc/keys/use_key.json'):
-            with open('./clc/keys/use_key.json', 'r', encoding='utf-8') as fp:
-                config_data = json.load(fp)
-                page_id = config_data["pageid"]
-                token = config_data["token"]
-                cookie = config_data["cookie"]
-
-        else:
-            print('未找到配置文件，请先进行配置')
-            page_id = input('请输入notion页面id：')
-            token = input('请输入操作该页面的机器人token：')
-            if isbulk:
-                cookie = input("请输入登录豆瓣后的cookie:")
-            else:
-                cookie = ''
-            print("初始化配置成功")
-            config_data = {"pageid": page_id, "token": token, "cookie": cookie}
-            with open('./clc/keys/use_key.json', 'w', encoding='utf-8') as fp:
-                config_data = json.dumps(config_data)
-                fp.write(config_data)
-
-        return page_id, token,cookie
+    def __init__(self,isbulk=None):
+        self.page_id, self.token, self.cookie= get_config(isbulk=isbulk)
 
     def crawl_movie_info(self, movie_id, cookie=None):
 
@@ -94,14 +97,14 @@ class DoubanMovieRobot():
                     time.sleep(1)
                     continue
 
-            except requests.exceptions.ConnectionError :
+            except requests.exceptions.ConnectionError:
                 if error_count <= 10:
                     print(f"\033[0;91;40m获取电影信息过于频繁的请求，正在等待重试...第{error_count}次\033[0m")
                     time.sleep(2)
                     error_count += 1
                     continue
                 else:
-                    print(f"\033[0;91;40m该电影请求重试超过10次，请检查网络，程序终止！\033[0m")
+                    print(f"\033[0;91;40m该电影请求重试超过10次，程序终止，请检查网络！\033[0m")
                     sys.exit()
 
     @staticmethod
@@ -186,13 +189,11 @@ class DoubanMovieRobot():
                             language, rank_no, src)
         return movie
 
-    def run(self,fromexternal=None):
+    def run(self, fromexternal = None):
         if fromexternal:
-            config= self.get_config(True)
-            page_id, token= config[:2]
-            cookie = config[2]
+            page_id, token, cookie = self.page_id, self.token, self.cookie
             for single_id in fromexternal:
-                movie= self.crawl_movie_info(single_id,cookie)
+                movie = self.crawl_movie_info(single_id, cookie)
                 p = {
                     "properties": {
                         "Movie": {"title": [{"type": "text", "text": {"content": movie.name}}]},
@@ -250,18 +251,18 @@ class DoubanMovieRobot():
                     "Content-Type": "application/json",
                     "Authorization": "Bearer " + token
                 }
-                self.read_post(page_id,p,headers,movie)
+                self.read_post(page_id, p, headers, movie)
 
         else:
 
-            page_id, token = self.get_config()[:2]
+            page_id, token = self.page_id,self.token
             cookie = ''
             movie_id = input('请输入电影ID：')
             if movie_id == '':
                 print('请输入正确的电影ID')
             else:
                 movie_id = movie_id
-            movie = self.crawl_movie_info(movie_id,cookie)
+            movie = self.crawl_movie_info(movie_id, cookie)
             p = {
                 "properties": {
                     "Movie": {"title": [{"type": "text", "text": {"content": movie.name}}]},
@@ -319,10 +320,10 @@ class DoubanMovieRobot():
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + token
             }
-            self.read_post(page_id,p,headers,movie)
+            self.read_post(page_id, p, headers, movie)
 
     @staticmethod
-    def read_post(page_id,p,headers,movie):
+    def read_post(page_id, p, headers, movie):
         url = "https://api.notion.com/v1/pages"
         while True:
             try:
@@ -344,8 +345,9 @@ class DoubanMovieRobot():
                     print('通讯失败，检查使用配置好机器人')
                     break
             except requests.exceptions.ConnectionError:
-                print("\033[0;93;101m上传notion过于频繁的请求，正在等待重试...\033[0m")
+                print("\033[0;91;40m请求上传notion，正在等待重试...\033[0m")
                 continue
+
 
 if __name__ == "__main__":
     try:
