@@ -11,5 +11,5 @@ Crawl movie infomation from Douban to notion
 豆瓣电影的id以及排行榜的type都在url链接中
 
 ## 版本说明
-**v1.0** 一个能够稳定运行的正式版本 
+**v1.0** 一个能够稳定运行的正式版本  
 **v2.0** 用wails重新写的一个GUI版本
