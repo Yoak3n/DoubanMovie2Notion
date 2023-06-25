@@ -2,6 +2,7 @@ package network
 
 import (
 	"douban_movie/backend/model"
+	"douban_movie/package/logger"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/antchfx/htmlquery"
@@ -33,10 +34,6 @@ func NewCrawl(target string) (*Crawl, error) {
 }
 
 func (c *Crawl) getHtml() *goquery.Document {
-	//res, err := grequests.Get(c.target, c.ro)
-	//if err != nil {
-	//	panic(err)
-	//}
 	req, err := http.NewRequest("GET", c.target, nil)
 	if err != nil {
 		panic(err)
@@ -45,10 +42,12 @@ func (c *Crawl) getHtml() *goquery.Document {
 	client := &http.Client{}
 	res, err := client.Do(req)
 	if err != nil {
+		logger.Error("")
 		panic(err)
 	}
 	dom, err := goquery.NewDocumentFromReader(res.Body)
 	if err != nil {
+		logger.Error("请求发送错误：", err)
 		panic(err)
 	}
 	res.Body.Close()

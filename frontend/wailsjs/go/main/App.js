@@ -14,6 +14,10 @@ export function LoadOptions() {
   return window['go']['main']['App']['LoadOptions']();
 }
 
+export function QueryMovie(arg1) {
+  return window['go']['main']['App']['QueryMovie'](arg1);
+}
+
 export function WriteConfig(arg1, arg2, arg3) {
   return window['go']['main']['App']['WriteConfig'](arg1, arg2, arg3);
 }

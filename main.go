@@ -1,14 +1,16 @@
 package main
 
 import (
+	"douban_movie/package/logger"
 	"embed"
-	"fmt"
-	"github.com/wailsapp/wails/v2/pkg/options/windows"
+	"math/rand"
 	"os"
+	"time"
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
+	"github.com/wailsapp/wails/v2/pkg/options/windows"
 )
 
 //go:embed all:frontend/dist
@@ -16,15 +18,17 @@ var assets embed.FS
 
 func main() {
 	// Create an instance of the app structure
+	rand.Seed(time.Now().Unix())
 	app := NewApp()
 	wd, _ := os.Getwd()
 	err := os.Mkdir(wd+"/data/webview", os.ModePerm)
 	if err != nil {
-		fmt.Println(err)
+		logger.Debug(err)
 	}
+
 	// Create application with options
 	err = wails.Run(&options.App{
-		Title:  "豆瓣电影入库",
+		Title:  "",
 		Width:  512,
 		Height: 384,
 		AssetServer: &assetserver.Options{
@@ -45,6 +49,6 @@ func main() {
 	})
 
 	if err != nil {
-		println("Error:", err.Error())
+		logger.Error("Error:", err.Error())
 	}
 }

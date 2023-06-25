@@ -22,12 +22,16 @@ const handleQuit = () =>{
       <template #title>
       <a href="https://github.com/Yoak3n/DoubanMovie2Notion"
         style="text-decoration: none; color: inherit"
-      >欢迎使用豆瓣电影2notion</a>
+      >欢迎使用豆瓣电影2notion！</a>
     </template>
     <template #extra>
       <n-space>
-        <n-button 
-        round 
+        <n-button
+        strong
+        :focusable="false"
+        quaternary
+        :bordered="false" 
+        round
         @click="handleQuit">
           <template #icon>
             <n-icon><log-in-icon></log-in-icon></n-icon>
@@ -50,7 +54,7 @@ const handleQuit = () =>{
 .app-wrapper{
   .welcome{
     font-size: large;
-    margin: 2rem 0 ;
+    padding: 2rem 0 ;
   }
   margin: 0 2rem  ;
 }
