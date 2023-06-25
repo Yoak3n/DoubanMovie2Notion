@@ -2,9 +2,11 @@ package main
 
 import (
 	"context"
+	"douban_movie/backend/model"
 	"douban_movie/backend/network"
 	"douban_movie/config"
-	"douban_movie/util"
+	"douban_movie/package/logger"
+	"douban_movie/package/util"
 	"fmt"
 	"io"
 )
@@ -20,7 +22,6 @@ type Result struct {
 
 // NewApp creates a new App application struct
 func NewApp() *App {
-
 	return &App{}
 }
 
@@ -73,6 +74,16 @@ func (a *App) WriteConfig(configname string, id string, token string) string {
 		return err.Error()
 	}
 	return ""
+}
+
+// QueryMovie queries movie info
+func (a *App) QueryMovie(name string) []model.QueryResult {
+	results, err := network.OnQuery(name)
+	if err != nil {
+		logger.Warn(err)
+		return results
+	}
+	return results
 }
 
 // Greet returns a greeting for the given name

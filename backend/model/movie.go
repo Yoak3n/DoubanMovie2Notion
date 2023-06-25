@@ -93,3 +93,14 @@ type Rank struct {
 type Imdb struct {
 	RichText []Rich `json:"rich_text"`
 }
+
+type QueryResult struct {
+	Episode  string `json:"episode"`
+	Id       string `json:"id"`
+	Img      string `json:"img"`
+	Title    string `json:"title"`
+	SubTitle string `json:"sub_title"`
+	Type     string `json:"type"`
+	Url      string `json:"url"`
+	Year     string `json:"year"`
+}
