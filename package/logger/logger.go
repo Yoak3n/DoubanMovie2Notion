@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"douban_movie/package/util"
 	"io"
 	"log"
 	"os"
@@ -14,11 +15,8 @@ var (
 )
 
 func init() {
-	wd, _ := os.Getwd()
-	err := os.Mkdir(wd+"/data/logs", os.ModePerm)
-	if err != nil {
-		log.Println(err)
-	}
+	util.CreateDirNotExists("data")
+	util.CreateDirNotExists("data/logs")
 	file, err := os.OpenFile("data/logs/errors.log",
 		os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {

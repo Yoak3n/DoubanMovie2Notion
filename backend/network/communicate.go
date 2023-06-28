@@ -93,9 +93,11 @@ func (c *Crawl) FetchMovie() *model.DoubanMovie {
 	movie.ReleaseTime = strings.TrimSpace(dom.Find("span[property=\"v:initialReleaseDate\"]").Text())
 	// 评分
 	t := dom.Find("strong[property=\"v:average\"]").Text()
+	var ft float64
 	ft, err := strconv.ParseFloat(strings.TrimSpace(t), 64)
 	if err != nil {
 		fmt.Println("get score error")
+		ft = 0.0
 	}
 	fmStr := fmt.Sprintf("%.1f", ft)
 	ft64, err := strconv.ParseFloat(fmStr, 64)
@@ -162,7 +164,13 @@ func (c *Crawl) FetchMovie() *model.DoubanMovie {
 	}
 	movie.Year = uint(atoi)
 	// IMDB号
-	i := htmlquery.InnerText(htmlquery.Find(s, "//span[./text()=\"IMDb:\"]/following::text()[1]")[0])
+	imdb := htmlquery.Find(s, "//span[./text()=\"IMDb:\"]/following::text()[1]")
+	var i string
+	if len(imdb) == 0 {
+		i = "暂无"
+	} else {
+		i = htmlquery.InnerText(imdb[0])
+	}
 	movie.Imdb = strings.TrimSpace(i)
 	// 封面
 	val, _ = dom.Find("#mainpic>a>img").Attr("src")

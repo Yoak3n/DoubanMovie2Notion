@@ -2,7 +2,7 @@
 import { NForm, NFormItem, NInput, NButton, NSelect, NDrawer, NList, NListItem, NImage, NThing, NTag, NSpace, NDrawerContent, NEmpty, SelectOption, useNotification } from 'naive-ui'
 import { LoadOptions, AppRun, QueryMovie } from '../../wailsjs/go/main/App';
 import { useRouter } from 'vue-router';
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 import type { Result } from "../types";
 const $router = useRouter()
 const $notification = useNotification()
@@ -107,8 +107,7 @@ const idQuery = (): void => {
         </n-input>
       </n-form-item>
       <n-form-item :show-label="false" :show-feedback="false">
-        <n-button type="success" @click="submit" class="button" size="large" :loading="submitLoading"
-          :disabled="submitLoading">
+        <n-button type="success" @click="submit" class="button" size="large" :loading="submitLoading">
           提交
         </n-button>
       </n-form-item>

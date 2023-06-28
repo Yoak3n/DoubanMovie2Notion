@@ -6,7 +6,6 @@ import (
 	"douban_movie/backend/network"
 	"douban_movie/config"
 	"douban_movie/package/logger"
-	"douban_movie/package/util"
 	"fmt"
 	"io"
 )
@@ -45,7 +44,7 @@ func (a *App) AppRun(target string, option string) Result {
 		return Result{err.Error(), false}
 	} else {
 		movie := crawl.FetchMovie()
-		res := network.Post2Notion(util.MakePost(movie))
+		res := network.Post2Notion(network.MakePost(movie))
 		result := &Result{
 			Name: movie.Name,
 		}
@@ -68,8 +67,8 @@ func (a *App) AppRun(target string, option string) Result {
 
 }
 
-func (a *App) WriteConfig(configname string, id string, token string) string {
-	err := config.CreateConfig(configname, id, token)
+func (a *App) WriteConfig(configName string, id string, token string) string {
+	err := config.CreateConfig(configName, id, token)
 	if err != nil {
 		return err.Error()
 	}

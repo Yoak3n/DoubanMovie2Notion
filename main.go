@@ -2,9 +2,9 @@ package main
 
 import (
 	"douban_movie/package/logger"
+	"douban_movie/package/util"
 	"embed"
 	"math/rand"
-	"os"
 	"time"
 
 	"github.com/wailsapp/wails/v2"
@@ -18,16 +18,11 @@ var assets embed.FS
 
 func main() {
 	// Create an instance of the app structure
-	rand.Seed(time.Now().Unix())
+	rand.NewSource(time.Now().UnixNano())
 	app := NewApp()
-	wd, _ := os.Getwd()
-	err := os.Mkdir(wd+"/data/webview", os.ModePerm)
-	if err != nil {
-		logger.Debug(err)
-	}
-
+	util.CreateDirNotExists("data/webview")
 	// Create application with options
-	err = wails.Run(&options.App{
+	err := wails.Run(&options.App{
 		Title:  "",
 		Width:  512,
 		Height: 384,
@@ -44,7 +39,7 @@ func main() {
 		Windows: &windows.Options{
 			DisableFramelessWindowDecorations: false,
 			//DisableWindowIcon:   true,
-			WebviewUserDataPath: "./data/webview",
+			WebviewUserDataPath: "data/webview",
 		},
 	})
 

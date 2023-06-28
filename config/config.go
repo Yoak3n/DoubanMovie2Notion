@@ -1,6 +1,7 @@
 package config
 
 import (
+	"douban_movie/package/util"
 	"fmt"
 	"github.com/spf13/viper"
 	"os"
@@ -19,14 +20,7 @@ func init() {
 	viper.SetConfigType("json")
 	Conf = new(Configuration)
 	wd, _ = os.Getwd()
-	err := os.Mkdir(wd+"/data", os.ModePerm)
-	if err != nil {
-		fmt.Println(err)
-	}
-	err = os.Mkdir(wd+"/data/keys", os.ModePerm)
-	if err != nil {
-		fmt.Println(err)
-	}
+	util.CreateDirNotExists("data/keys")
 }
 
 func LoadConfig() []string {
