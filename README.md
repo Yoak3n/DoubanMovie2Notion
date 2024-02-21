@@ -3,7 +3,7 @@ Crawl movie information from Douban to notion
 
 ![](https://yoaken-1316330335.cos.ap-chongqing.myqcloud.com/markdownPic/202306230838699.png)
 ## 使用说明
-配置notion可参考另一个项目的[使用步骤](https://github.com/Yoak3n/SerialPagesGenerator4notion)
+配置notion可参考另一个项目的[使用步骤](https://github.com/Yoak3n/SerialPagesGenerator4notion/tree/main/demo#使用步骤)
 
 
 请把数据库的Property按示例配置，注意*Property名*和*类型***必须一致**
