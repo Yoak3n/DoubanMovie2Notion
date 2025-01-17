@@ -35,14 +35,7 @@ func MakePost(movie *model.DoubanMovie) *http.Request {
 }
 
 func genBody() *model.Data {
-	rank := 0
-	var err error
-	if movie.RankNo != "" {
-		rank, err = strconv.Atoi(movie.RankNo)
-		if err != nil {
-			log.Println(err)
-		}
-	}
+
 	properties := &model.Properties{
 		Movie:    *genMovie(),
 		Director: *genDirector(),
@@ -57,9 +50,14 @@ func genBody() *model.Data {
 		Year:     model.Year{Number: int(movie.Year)},
 		Imdb:     *genImdb(),
 		Score:    model.Score{Number: movie.Score},
-		Rank:     model.Rank{Number: int64(rank)},
 	}
-
+	if movie.RankNo != "" {
+		rank, err := strconv.Atoi(movie.RankNo)
+		if err != nil {
+			log.Println(err)
+		}
+		properties.Rank = &model.Rank{Number: int64(rank)}
+	}
 	body := &model.Data{
 		Properties: *properties,
 		Parent:     model.Parent{Type: "database_id", DatabaseID: config.Conf.DatabaseID},

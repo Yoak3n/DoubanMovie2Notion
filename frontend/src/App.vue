@@ -18,7 +18,7 @@ const handleQuit = () =>{
 
 <template>
   <div class="app-wrapper">
-    <n-page-header class="welcome" @back="handleBack">
+    <n-page-header class="welcome" @back="handleBack" style="--wails-draggable:drag">
       <template #title>
       <a href="https://github.com/Yoak3n/DoubanMovie2Notion"
         style="text-decoration: none; color: inherit"

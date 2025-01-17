@@ -40,7 +40,7 @@ type Properties struct {
 	Year     `json:"Year"`
 	Imdb     `json:"imdb"`
 	Duration `json:"Duration"`
-	Rank     `json:"Rank,omitempty"`
+	*Rank    `json:"Rank,omitempty"`
 	Score    `json:"Score,omitempty"`
 }
 
