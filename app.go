@@ -41,10 +41,21 @@ func (a *App) AppRun(target string, option string) Result {
 	config.ReadConfig(option)
 	crawl, err := network.NewCrawl(target)
 	if err != nil {
+		logger.Error(err)
 		return Result{err.Error(), false}
 	} else {
 		movie := crawl.FetchMovie()
+		logger.INFO.Printf("fetch movie data: %+v\n", movie)
+
+		if movie.Name == "" {
+			return Result{"无法获取到电影信息，可能是被豆瓣暂时限制访问，请稍后再试或检查日志", false}
+		}
+
 		res := network.Post2Notion(network.MakePost(movie))
+		if res == nil {
+			return Result{"上传 Notion 失败，请检查网络连接或 API 配置", false}
+		}
+
 		result := &Result{
 			Name: movie.Name,
 		}
