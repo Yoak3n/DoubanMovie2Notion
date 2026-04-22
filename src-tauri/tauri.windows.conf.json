@@ -1,0 +1,13 @@
+{
+  "identifier": "com.Yoake.db2n",
+  "bundle": {
+    "windows": {
+      "nsis": {
+        "installerHooks": "./scripts/hooks.nsh"
+      }
+    },
+    "resources": {
+      "target/release/db2n-cli.exe": "db2n-cli.exe"
+    }
+  }
+}
