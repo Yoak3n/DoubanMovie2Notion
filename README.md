@@ -16,3 +16,4 @@ Crawl movie information from Douban to notion
 ## 版本说明
 **v1.0** 一个能够稳定运行的正式版本   
 **v2.0** 用wails重新写的一个GUI版本
+**v3.0** 用tauri重新写的一个GUI版本，新增cli支持（回归最初）
