@@ -1,8 +1,8 @@
 [package]
 name = "db2n"
-version = "0.2.0"
+version = "0.3.0"
 description = "A Tauri App"
-authors = ["you"]
+authors = ["Yoa"]
 edition = "2021"
 default-run = "db2n"
 
